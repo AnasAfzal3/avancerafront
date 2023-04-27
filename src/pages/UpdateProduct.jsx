@@ -1,41 +1,42 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Axios from "axios";
-const Addproduct = () => {
-  const [categories, setCategory] = useState([]);
+
+const UpdateProduct = () => {
+  useEffect(() => {});
+  const [id, setProductId] = useState("");
   const [product_title, setProduct] = useState("");
   const [price, setprice] = useState("");
   const [stock, setstock] = useState("");
   const [productActive, setFlag] = useState(1);
   const [Addcategory, SelectCategory] = useState(1);
-  const [responseMessage, setResponse] = useState("");
-  useEffect(() => {
-    Axios.get("http://localhost:3000/categories").then((res) => {
-      setCategory(res.data);
-    });
-  }, []);
-  const productsave = async () => {
-    await Axios.post("http://localhost:3000/product", {
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+  }
+  const saveSetting = async () => {
+    console.log("hit")
+    await axios.put(`http://localhost:3000/product/${id}`, {
       product_name: product_title,
       product_price: price,
       product_stock: stock,
       category: Addcategory,
       product_active: productActive,
-    }).then(res=>{
-      console.log("then")
-      setResponse(res.data.message)
-     
-     
-    }).catch(err=>{
-      console.log("cath")
-      setResponse(err.response.data.message)
     });
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-
   return (
     <form onSubmit={handleSubmit}>
+      <div className="mb-3">
+        <label htmlFor="id" className="form-label">
+          Product id
+        </label>
+
+        <input
+          type="text"
+          onChange={(e) => setProductId(e.target.value)}
+          className="form-control"
+          id="title"
+          aria-describedby="id"
+        />
+      </div>
       <div className="mb-3">
         <label htmlFor="title" className="form-label">
           Product title
@@ -47,7 +48,6 @@ const Addproduct = () => {
           className="form-control"
           id="title"
           aria-describedby="producttitle"
-          required
         />
       </div>
       <div className="mb-3">
@@ -92,12 +92,11 @@ const Addproduct = () => {
         </select>
       </div>
 
-      <button type="submit" className="btn btn-primary" onClick={productsave}>
-        Add product
+      <button type="submit" className="btn btn-primary" onClick={saveSetting}>
+        Update product
       </button>
-      <p>{responseMessage}</p>
     </form>
   );
 };
 
-export default Addproduct;
+export default UpdateProduct;

@@ -4,8 +4,8 @@ import Navbar from './components/Navbar'
 import Products from './components/products'
 import Admin from './pages/admin'
 import Addproduct from './pages/addproduct';
-import About from './about'
-import axios from 'axios'
+import UpdateProduct from './pages/UpdateProduct';
+import DeleteProduct from './pages/DeleteProduct';
 function App() {
 
   return (
@@ -17,8 +17,9 @@ function App() {
   <Routes>
     <Route path='/admin' element={<Admin/>}/>
     <Route path='/admin/addproduct' element={<Addproduct/>}/>
+    <Route path='/admin/updateproduct' element={<UpdateProduct/>}/>
     <Route path='/' element={<><Navbar/><Products/></>}/>
-
+    <Route path='/admin/deleteproduct' element={<DeleteProduct/>}/>
    
   </Routes>
  

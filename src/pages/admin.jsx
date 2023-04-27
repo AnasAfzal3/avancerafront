@@ -29,12 +29,12 @@ const admin = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/addproduct">
+                  <a className="nav-link" href="/admin/deleteproduct">
                     Delete Product
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">
+                  <a className="nav-link" href="/admin/updateproduct">
                     Update Product
                   </a>
                 </li>
