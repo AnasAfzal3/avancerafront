@@ -18,6 +18,9 @@ const Navbar = () => {
         <li className="nav-item">
           <a className="nav-link" href="#">Products</a>
         </li>
+        <li className="nav-item">
+          <a className="nav-link" href="#">Admin login</a>
+        </li>
         
       </ul>
       <form className="d-flex">
