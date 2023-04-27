@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import addproduct from "./addproduct";
-const admin = () => {
+import Axios from "axios";
+const Admin = () => {
+  const [mostSellingProduct,setProductName] = useState({})
+  const [popularCategory,setpopularCategory] = useState({})
+  useEffect(()=>{
+  Axios.get("http://localhost:3000/products/topSellingProducts").then(res=>{
+    
+    setProductName(res.data)
+  })
+  Axios.get("http://localhost:3000/products/most-popular").then(response=>{
+    console.log(response.data.categoryName)
+    setpopularCategory(response.data)
+})
+  },[])
   return (
     <>
       <div className="container-fluid">
@@ -42,9 +55,28 @@ const admin = () => {
             </div>
           </div>
         </nav>
-      </div>
+        <div className="row ">
+       <div className="col-md-3">
+        
+        <h4 className="mt-5 text-center">Most Selling Products</h4>
+        <div className="mostSellingProduct text-success mt-4">
+         <h2 className=" text-center mt-4">{mostSellingProduct.product_name}</h2>
+         <h2 className="text-center">Order percentage</h2>
+         <h2 className="text-center mt-4">{mostSellingProduct.order_percentage}</h2>
+        </div>
+       </div>
+       <div className="col-md-3">
+        <h4 className="mt-5 text-center">Customer Favorite category</h4>
+        <div className="mostFavoriteCategory mt-4 text-warning">
+        <h2 className=" text-center mt-4">{popularCategory.categoryName}</h2>
+         <h2 className="text-center">Order percentage</h2>
+         <h2 className="text-center mt-4">{popularCategory.order_percentage}</h2>
+        </div>
+       </div>
+       </div>
+     </div>
     </>
   );
 };
 
-export default admin;
+export default Admin;
