@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 const DeleteProduct = () => {
   useEffect(() => {}, []);
   const [id, setProductId] = useState("");
@@ -7,12 +8,14 @@ const DeleteProduct = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+  const redirectPage = useNavigate()
   const DeleteProduct = async () => {
+    const token = localStorage.getItem('token')
     await axios
-      .delete(`http://localhost:3000/product/${id}`, {})
+      .delete(`http://localhost:3000/product/${id}`, { headers: {"Authorization" : `Bearer ${token}`}})
       .then((res) => {
         setResponse("Product Deleted Sucessfully");
-        console.log(res)
+        redirectPage("/admin")
       })
       .catch((err) => {
         console.log(err);

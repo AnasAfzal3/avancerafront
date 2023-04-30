@@ -14,14 +14,17 @@ const Addproduct = () => {
     });
   }, []);
   const productsave = async () => {
+    const token = localStorage.getItem('token')
     await Axios.post("http://localhost:3000/product", {
+      
       product_name: product_title,
       product_price: price,
       product_stock: stock,
       category: Addcategory,
       product_active: productActive,
-    }).then(res=>{
-      console.log("then")
+
+    },{ headers: {"Authorization" : `Bearer ${token}`}}).then(res=>{
+     
       setResponse(res.data.message)
      
      

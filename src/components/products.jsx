@@ -14,14 +14,13 @@ const Products = () => {
     
       <div className="row">
       {products.map((post)=>{
-        const {id,product_name,price} = post
+        const {id,product_name,product_price} = post
         return   <div className="col-md-4">
         <div className="card mt-4" style={{width: "18rem"}} key={id}>
-          <img src="..." className="card-img-top" alt="..." />
           <div className="card-body">
             <h5 className="card-title">{product_name}</h5>
             <p className="card-text">
-              {price}
+              {product_price}
             </p>
             <a href="#" className="btn btn-primary">
               Buy now

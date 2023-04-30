@@ -2,19 +2,26 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import addproduct from "./addproduct";
 import Axios from "axios";
+
 const Admin = () => {
   const [mostSellingProduct,setProductName] = useState({})
   const [popularCategory,setpopularCategory] = useState({})
   useEffect(()=>{
-  Axios.get("http://localhost:3000/products/topSellingProducts").then(res=>{
+    const token = localStorage.getItem('token')
+  Axios.get("http://localhost:3000/products/topSellingProducts",{ headers: {"Authorization" : `Bearer ${token}`} }
+  ).then(res=>{
     
     setProductName(res.data)
   })
-  Axios.get("http://localhost:3000/products/most-popular").then(response=>{
+  Axios.get("http://localhost:3000/products/most-popular",{ headers: {"Authorization" : `Bearer ${token}`}}).then(response=>{
     console.log(response.data.categoryName)
     setpopularCategory(response.data)
 })
   },[])
+  const logout = () =>{
+   localStorage.clear("token")
+   
+  }
   return (
     <>
       <div className="container-fluid">
@@ -49,6 +56,11 @@ const Admin = () => {
                 <li className="nav-item">
                   <a className="nav-link" href="/admin/updateproduct">
                     Update Product
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="/" onClick={logout}>
+                    Logout
                   </a>
                 </li>
               </ul>

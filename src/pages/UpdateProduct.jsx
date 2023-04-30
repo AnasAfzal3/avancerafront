@@ -1,8 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate} from "react-router-dom";
 
 const UpdateProduct = () => {
-  useEffect(() => {});
+  const redirectPage = useNavigate()
+  useEffect(() => 
+  {});
+  const [response,setResponse] = useState("")
   const [id, setProductId] = useState("");
   const [product_title, setProduct] = useState("");
   const [price, setprice] = useState("");
@@ -13,13 +17,17 @@ const UpdateProduct = () => {
     e.preventDefault();
   }
   const saveSetting = async () => {
-    console.log("hit")
+    const token = localStorage.getItem('token')
     await axios.put(`http://localhost:3000/product/${id}`, {
       product_name: product_title,
       product_price: price,
       product_stock: stock,
       category: Addcategory,
       product_active: productActive,
+    },{ headers: {"Authorization" : `Bearer ${token}`}}).then(response=>{
+      redirectPage("/admin")
+    }).catch(error=>{
+      setResponse("Data not found")
     });
   };
   return (
@@ -95,6 +103,7 @@ const UpdateProduct = () => {
       <button type="submit" className="btn btn-primary" onClick={saveSetting}>
         Update product
       </button>
+      <h4>{response}</h4>
     </form>
   );
 };
